@@ -58,8 +58,8 @@ namespace Alistar
             Menu healMenu = menu.AddSubMenu(new Menu("Heal Options", "Heal Options"));
             healMenu.AddItem(new MenuItem("useE", "Use E").SetValue(true));
             healMenu.AddItem(new MenuItem("allyHeal", "Heal Ally").SetValue(true));
-            healMenu.AddItem(new MenuItem("Minimal HP to Heal", "Minimal HP to Heal").SetValue(new Slider(200, 1, playerMaxHealINT)));
-            healMenu.AddItem(new MenuItem("Minimal Mana to Heal", "Minimal Mana to Heal").SetValue(new Slider(200, 1, playerMaxManaINT)));
+            healMenu.AddItem(new MenuItem("Minimal HP to Heal", "Minimal HP to Heal").SetValue(new Slider(150, 1, playerMaxHealINT)));
+            healMenu.AddItem(new MenuItem("Minimal Mana to Heal", "Minimal Mana to Heal").SetValue(new Slider(150, 1, playerMaxManaINT)));
 
             //spellMenu.AddItem(new MenuItem("LaughButton", "Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
             Drawing.OnDraw += Drawing_OnDraw;
