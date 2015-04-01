@@ -83,7 +83,7 @@ namespace Alistar
             {
                 if (Environment.TickCount > LastLaugh + 4200)
                 {
-                    LastLaugh = Environment.TickCount;
+                    LastLaugh = Environment.TickCount; ss
                 }
             }*/
         }
