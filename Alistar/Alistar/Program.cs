@@ -93,14 +93,18 @@ namespace Alistar
             if (Player.IsDead)
                 return;
 
-            if (E.IsReady())
+            if(menu.Item("eDraw").GetValue<bool>())
             {
-                Utility.DrawCircle(Player.Position, E.Range, Color.Aqua);
+                if (E.IsReady())
+                {
+                    Utility.DrawCircle(Player.Position, E.Range, Color.Aqua);
+                }
+                else
+                {
+                    Utility.DrawCircle(Player.Position, E.Range, Color.DarkRed);
+                }
             }
-            else
-            {
-                Utility.DrawCircle(Player.Position, E.Range, Color.DarkRed);
-            }
+            
         }
 
         /// <summary>
