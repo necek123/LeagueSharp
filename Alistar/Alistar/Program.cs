@@ -52,6 +52,7 @@ namespace Alistar
             Menu drawMenu = menu.AddSubMenu(new Menu("Draw", "Draw"));
             drawMenu.AddItem(new MenuItem("eDraw", "Draw E range").SetValue(true));
             drawMenu.AddItem(new MenuItem("wDraw", "Draw W range").SetValue(true));
+            drawMenu.AddItem(new MenuItem("debugDraw", "Debug Heal HP").SetValue(false));
 
             Menu healMenu = menu.AddSubMenu(new Menu("Heal Options", "Heal Options"));
             healMenu.AddItem(new MenuItem("useE", "Use E").SetValue(true));
@@ -98,7 +99,10 @@ namespace Alistar
             if (Player.IsDead)
                 return;
 
-            Drawing.DrawText(Drawing.WorldToScreen(Player.Position)[0], Drawing.WorldToScreen(Player.Position)[1], Color.Orange, Player.Health.ToString() + " <= " + menu.Item("Minimal HP to Heal").GetValue<Slider>().Value);
+            if (menu.Item("debugDraw").GetValue<bool>())
+            {
+                Drawing.DrawText(Drawing.WorldToScreen(Player.Position)[0], Drawing.WorldToScreen(Player.Position)[1], Color.Orange, Player.Health.ToString() + " < " + menu.Item("Minimal HP to Heal").GetValue<Slider>().Value);
+            }
 
             if(menu.Item("eDraw").GetValue<bool>())
             {
