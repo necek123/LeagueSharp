@@ -98,6 +98,8 @@ namespace Alistar
             if (Player.IsDead)
                 return;
 
+            Drawing.DrawText(Game.CursorPos.X, Game.CursorPos.Y + 50f, Color.LimeGreen, "X = sraka");
+
             if(menu.Item("eDraw").GetValue<bool>())
             {
                 if (E.IsReady())
