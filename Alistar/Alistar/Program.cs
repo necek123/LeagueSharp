@@ -98,7 +98,7 @@ namespace Alistar
             {
                 if (E.IsReady())
                 {
-                    Utility.DrawCircle(Player.Position, E.Range, Color.Aqua);
+                    Utility.DrawCircle(Player.Position, E.Range, Color.LimeGreen);
                 }
                 else
                 {
