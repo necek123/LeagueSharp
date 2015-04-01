@@ -19,6 +19,9 @@ namespace Alistar
         private static float playerMaxHeal = Player.MaxHealth;
         private static int playerMaxHealINT = Convert.ToInt32(playerMaxHeal);
 
+        private static float playerMaxMana = Player.MaxMana;
+        private static int playerMaxManaINT = Convert.ToInt32(playerMaxMana);
+
         static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
@@ -54,6 +57,7 @@ namespace Alistar
             healMenu.AddItem(new MenuItem("useE", "Use E").SetValue(true));
             healMenu.AddItem(new MenuItem("allyHeal", "Heal Ally").SetValue(true));
             healMenu.AddItem(new MenuItem("Minimal HP to Heal", "Minimal HP to Heal").SetValue(new Slider(200, 1, playerMaxHealINT)));
+            healMenu.AddItem(new MenuItem("Minimal Mana to Heal", "Minimal Mana to Heal").SetValue(new Slider(200, 1, playerMaxManaINT)));
 
             //spellMenu.AddItem(new MenuItem("LaughButton", "Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
             Drawing.OnDraw += Drawing_OnDraw;
@@ -152,7 +156,7 @@ namespace Alistar
             {
                 
                 Obj_AI_Hero target = TargetSelector.GetTarget(E.Range, TargetSelector.DamageType.Magical);
-                if (Player.Health <= menu.Item("Minimal HP to Heal").GetValue<Slider>().Value)
+                if (Player.Health <= menu.Item("Minimal HP to Heal").GetValue<Slider>().Value && Player.Mana >= menu.Item("Minimal Mana to Heal").GetValue<Slider>().Value)
                 {
                     E.Cast();
                     Game.PrintChat(Player.Health.ToString() + " <= " + menu.Item("Minimal HP to Heal").GetValue<Slider>().Value);
@@ -165,7 +169,7 @@ namespace Alistar
                         if (Player.HasBuff("Recall") || Utility.InFountain(Player)) return;
                         if ((hero.Health / hero.MaxHealth) * 100 <= menu.Item("Minimal HP to Heal").GetValue<Slider>().Value &&
                             E.IsReady() &&
-                            hero.Distance(Player.ServerPosition) <= E.Range)
+                            hero.Distance(Player.ServerPosition) <= E.Range && Player.Mana >= menu.Item("Minimal Mana to Heal").GetValue<Slider>().Value)
                             E.Cast(hero);
                     }
                 }
