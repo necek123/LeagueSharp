@@ -32,7 +32,7 @@ namespace Alistar
             if (Player.ChampionName != "Alistar")
                 return;
 
-            Q = new Spell(SpellSlot.Q, 365);
+            Q = new Spell(SpellSlot.Q, 350);
             W = new Spell(SpellSlot.W, 600);
             E = new Spell(SpellSlot.E, 535);
 
