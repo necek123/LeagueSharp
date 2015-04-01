@@ -13,8 +13,9 @@ namespace Alistar
         //private static int LastLaugh;
         private static Orbwalking.Orbwalker Orbwalker;
         private static Spell Q, W, E;
+        private static SpellSlot ignite;
         private static Menu menu;
-        private static string version = "1.1";
+        private static string version = "1.2";
 
         private static float playerMaxHeal = Player.MaxHealth;
         private static int playerMaxHealINT = Convert.ToInt32(playerMaxHeal);
@@ -44,9 +45,10 @@ namespace Alistar
 
             Menu ts = menu.AddSubMenu(new Menu("Target Selector", "Target Selector"));
             TargetSelector.AddToMenu(ts);
-            /*Menu spellMenu = menu.AddSubMenu(new Menu("Spells", "Spells"));
+            Menu spellMenu = menu.AddSubMenu(new Menu("Spells", "Spells"));
 
-            spellMenu.AddItem(new MenuItem("useQ", "Use Q").SetValue(true));
+            spellMenu.AddItem(new MenuItem("useIgnite", "Use ignite").SetValue(true));
+            /*spellMenu.AddItem(new MenuItem("useQ", "Use Q").SetValue(true));
             spellMenu.AddItem(new MenuItem("useW", "Use W").SetValue(true));*/
 
             Menu drawMenu = menu.AddSubMenu(new Menu("Draw", "Draw"));
@@ -95,6 +97,8 @@ namespace Alistar
             }*/
         }
 
+        #region Drawing_OnDraw
+
         private static void Drawing_OnDraw(EventArgs args)
         {
             if (Player.IsDead)
@@ -117,22 +121,22 @@ namespace Alistar
                 }
             }
             
-            if(menu.Item("wDraw").GetValue<bool>())
+            if(menu.Item("wDraw").GetValue<bool>() && W.Level > 0)
             {
                 Utility.DrawCircle(Player.Position, W.Range, Color.Aqua);
             }
 
-            if(menu.Item("qDraw").GetValue<bool>())
+            if(menu.Item("qDraw").GetValue<bool>() && Q.Level > 0)
             {
                 Utility.DrawCircle(Player.Position, Q.Range, Color.Aqua);
             }
 
         }
+        #endregion
 
-        /// <summary>
-        /// Consume logic
-        /// </summary>
+        //================================================================================
 
+        #region COMBO
         private static void combo()
         {
             var targetEnemy = TargetSelector.GetTarget(W.Range, TargetSelector.DamageType.Physical);
@@ -157,8 +161,21 @@ namespace Alistar
                     }
                 }
             }
-        }
 
+            if(Q.IsReady() && W.IsReady() && W.IsKillable(targetEnemy, 1) && ObjectManager.Player.Distance(targetEnemy, false) < W.Range + targetEnemy.BoundingRadius)
+            {
+                W.CastOnUnit(targetEnemy, true);
+            }
+
+            if(Player.Distance((AttackableUnit)targetEnemy) <= 600 && IgniteDamage(targetEnemy) >= targetEnemy.Health && menu.Item("useIgnite").GetValue<bool>())
+            {
+                Player.Spellbook.CastSpell(ignite, targetEnemy);
+            }
+
+        }
+        #endregion
+
+        #region HealE
         private static void HealE()
         {
             if (!menu.Item("useE").GetValue<bool>())
@@ -188,6 +205,18 @@ namespace Alistar
                 
             }
         }
+        #endregion
 
+        #region IgniteDamage
+        private static float IgniteDamage(Obj_AI_Hero target)
+        {
+            if(ignite == SpellSlot.Unknown || Player.Spellbook.CanUseSpell(ignite) != SpellState.Ready)
+            {
+                return 0f;
+            }
+            return (float)Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite);
+        }
+
+        #endregion
     }
 }
