@@ -50,8 +50,9 @@ namespace Alistar
             spellMenu.AddItem(new MenuItem("useW", "Use W").SetValue(true));*/
 
             Menu drawMenu = menu.AddSubMenu(new Menu("Draw", "Draw"));
-            drawMenu.AddItem(new MenuItem("eDraw", "Draw E range").SetValue(true));
+            drawMenu.AddItem(new MenuItem("qDraw", "Draw Q range").SetValue(false));
             drawMenu.AddItem(new MenuItem("wDraw", "Draw W range").SetValue(true));
+            drawMenu.AddItem(new MenuItem("eDraw", "Draw E range").SetValue(false));
             drawMenu.AddItem(new MenuItem("debugDraw", "Debug Heal HP").SetValue(false));
 
             Menu healMenu = menu.AddSubMenu(new Menu("Heal Options", "Heal Options"));
@@ -119,6 +120,11 @@ namespace Alistar
             if(menu.Item("wDraw").GetValue<bool>())
             {
                 Utility.DrawCircle(Player.Position, W.Range, Color.Aqua);
+            }
+
+            if(menu.Item("qDraw").GetValue<bool>())
+            {
+                Utility.DrawCircle(Player.Position, Q.Range, Color.Aqua);
             }
 
         }
