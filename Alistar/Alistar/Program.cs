@@ -30,7 +30,7 @@ namespace Alistar
                 return;
 
             Q = new Spell(SpellSlot.Q, 365);
-            W = new Spell(SpellSlot.W, 635);
+            W = new Spell(SpellSlot.W, 615);
             E = new Spell(SpellSlot.E, 535);
 
 
