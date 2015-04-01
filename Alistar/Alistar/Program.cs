@@ -40,6 +40,7 @@ namespace Alistar
             
             menu = new Menu(Player.ChampionName + " ♥", Player.ChampionName, true);
             Menu orbwalkerMenu = menu.AddSubMenu(new Menu("Orbwalker", "Orbwalker"));
+            orbwalkerMenu.Item("AACircle").SetValue<bool>(false);
             Orbwalker = new Orbwalking.Orbwalker(orbwalkerMenu);
 
             Menu ts = menu.AddSubMenu(new Menu("Target Selector", "Target Selector"));
