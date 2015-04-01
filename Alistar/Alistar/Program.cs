@@ -14,7 +14,7 @@ namespace Alistar
         private static Orbwalking.Orbwalker Orbwalker;
         private static Spell Q, W, E;
         private static Menu menu;
-        private static string version = "1.4";
+        private static string version = "1.5";
 
         private static float playerMaxHeal = Player.MaxHealth;
         private static int playerMaxHealINT = Convert.ToInt32(playerMaxHeal);
