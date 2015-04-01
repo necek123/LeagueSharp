@@ -98,7 +98,7 @@ namespace Alistar
             if (Player.IsDead)
                 return;
 
-            Drawing.DrawText(Drawing.WorldToScreen(Game.CursorPos)[0], Drawing.WorldToScreen(Game.CursorPos)[1], Color.Red, "TEST");
+            Drawing.DrawText(Drawing.WorldToScreen(Player.Position)[0], Drawing.WorldToScreen(Player.Position)[1], Color.Red, "TEST");
 
             if(menu.Item("eDraw").GetValue<bool>())
             {
