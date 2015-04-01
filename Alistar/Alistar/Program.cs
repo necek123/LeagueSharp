@@ -34,7 +34,7 @@ namespace Alistar
             E = new Spell(SpellSlot.E, 555);
 
 
-
+            
             menu = new Menu(Player.ChampionName + " ♥", Player.ChampionName, true);
             Menu orbwalkerMenu = menu.AddSubMenu(new Menu("Orbwalker", "Orbwalker"));
             Orbwalker = new Orbwalking.Orbwalker(orbwalkerMenu);
@@ -51,12 +51,15 @@ namespace Alistar
 
             Menu healMenu = menu.AddSubMenu(new Menu("Heal Options", "Heal Options"));
             healMenu.AddItem(new MenuItem("useE", "Use E").SetValue(true));
+            healMenu.AddItem(new MenuItem("allyHeal", "Heal Ally").SetValue(true));
             healMenu.AddItem(new MenuItem("Minimal HP to Heal", "Minimal HP to Heal").SetValue(new Slider(200, 1, playerMaxHealINT)));
 
             spellMenu.AddItem(new MenuItem("LaughButton", "Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
             Drawing.OnDraw += Drawing_OnDraw;
 
             menu.AddToMainMenu();
+            
+
             Game.OnUpdate += Game_OnGameUpdate;
             Game.PrintChat("<font color=\"#ff9e00\">[NECEK CARRY]</font> <font color=\"#00ff00\">Combo Alistar! Have fun! By necek123. (V{0})</font> [L#]", version);
         }
@@ -111,6 +114,7 @@ namespace Alistar
 
             if (E.IsReady())
             {
+                
                 Obj_AI_Hero target = TargetSelector.GetTarget(E.Range, TargetSelector.DamageType.Magical);
                 if (Player.Health <= menu.Item("Minimal HP to Heal").GetValue<Slider>().Value)
                 {
@@ -118,14 +122,18 @@ namespace Alistar
                     Game.PrintChat(Player.Health.ToString() + " <= " + menu.Item("Minimal HP to Heal").GetValue<Slider>().Value);
                 }
 
-                foreach (var hero in ObjectManager.Get<Obj_AI_Hero>().Where(h => h.IsAlly && !h.IsMe))
+                if (menu.Item("allyHeal").GetValue<bool>())
                 {
-                    if (Player.HasBuff("Recall") || Utility.InFountain(Player)) return;
-                    if ((hero.Health / hero.MaxHealth) * 100 <= menu.Item("Minimal HP to Heal").GetValue<Slider>().Value &&
-                        E.IsReady() &&
-                        hero.Distance(Player.ServerPosition) <= E.Range)
-                        E.Cast(hero);
+                    foreach (var hero in ObjectManager.Get<Obj_AI_Hero>().Where(h => h.IsAlly && !h.IsMe))
+                    {
+                        if (Player.HasBuff("Recall") || Utility.InFountain(Player)) return;
+                        if ((hero.Health / hero.MaxHealth) * 100 <= menu.Item("Minimal HP to Heal").GetValue<Slider>().Value &&
+                            E.IsReady() &&
+                            hero.Distance(Player.ServerPosition) <= E.Range)
+                            E.Cast(hero);
+                    }
                 }
+                
             }
         }
 
