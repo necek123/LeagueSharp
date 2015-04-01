@@ -126,16 +126,16 @@ namespace Alistar
             SpellDataInst manaQ = Player.Spellbook.GetSpell(SpellSlot.Q);
             SpellDataInst manaW = Player.Spellbook.GetSpell(SpellSlot.W);
 
-            if(Q.IsReady() && W.IsReady() && manaQ.ManaCost + manaW.ManaCost <= Player.Mana)
+            if (Q.IsReady() && manaQ.ManaCost <= Player.Mana)
             {
-                W.CastOnUnit(targetEnemy);
-                
-                if(Player.Distance((AttackableUnit)targetEnemy) < Q.Range)
+                if (Player.Distance((AttackableUnit)targetEnemy) < Q.Range)
                 {
                     Q.Cast();
                 }
-            } else if (Q.IsReady() && manaQ.ManaCost <= Player.Mana)
+            } else if(Q.IsReady() && W.IsReady() && manaQ.ManaCost + manaW.ManaCost <= Player.Mana)
             {
+                W.CastOnUnit(targetEnemy);
+                
                 if(Player.Distance((AttackableUnit)targetEnemy) < Q.Range)
                 {
                     Q.Cast();
