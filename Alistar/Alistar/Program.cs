@@ -8,7 +8,7 @@ namespace Alistar
 {
     class Program
     {
-        private static readonly Obj_AI_Hero Player = ObjectManager.Player;
+        private static Obj_AI_Hero Player { get { return ObjectManager.Player; } }
 
         //private static int LastLaugh;
         private static Orbwalking.Orbwalker Orbwalker;
@@ -77,7 +77,7 @@ namespace Alistar
 
             if (Orbwalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
             {
-                //combo();
+                combo();
             }
 
             /*if (menu.Item("LaughButton").GetValue<KeyBind>().Active)
@@ -116,6 +116,32 @@ namespace Alistar
         /// <summary>
         /// Consume logic
         /// </summary>
+
+        private static void combo()
+        {
+            var targetEnemy = TargetSelector.GetTarget(W.Range, TargetSelector.DamageType.Physical);
+            if(targetEnemy == null || !targetEnemy.IsValid)
+                return;
+
+            SpellDataInst manaQ = Player.Spellbook.GetSpell(SpellSlot.Q);
+            SpellDataInst manaW = Player.Spellbook.GetSpell(SpellSlot.W);
+
+            if(Q.IsReady() && W.IsReady() && manaQ.ManaCost + manaW.ManaCost <= Player.Mana)
+            {
+                W.CastOnUnit(targetEnemy);
+                
+                if(Player.Distance((AttackableUnit)targetEnemy) < Q.Range)
+                {
+                    Q.Cast();
+                }
+            } else if (Q.IsReady() && manaQ.ManaCost <= Player.Mana)
+            {
+                if(Player.Distance((AttackableUnit)targetEnemy) < Q.Range)
+                {
+                    Q.Cast();
+                }
+            }
+        }
 
         private static void HealE()
         {
