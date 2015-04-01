@@ -10,7 +10,7 @@ namespace Alistar
     {
         private static readonly Obj_AI_Hero Player = ObjectManager.Player;
 
-        private static int LastLaugh;
+        //private static int LastLaugh;
         private static Orbwalking.Orbwalker Orbwalker;
         private static Spell Q, W, E;
         private static Menu menu;
@@ -41,10 +41,10 @@ namespace Alistar
 
             Menu ts = menu.AddSubMenu(new Menu("Target Selector", "Target Selector"));
             TargetSelector.AddToMenu(ts);
-            Menu spellMenu = menu.AddSubMenu(new Menu("Spells", "Spells"));
+            /*Menu spellMenu = menu.AddSubMenu(new Menu("Spells", "Spells"));
 
             spellMenu.AddItem(new MenuItem("useQ", "Use Q").SetValue(true));
-            spellMenu.AddItem(new MenuItem("useW", "Use W").SetValue(true));
+            spellMenu.AddItem(new MenuItem("useW", "Use W").SetValue(true));*/
 
             Menu drawMenu = menu.AddSubMenu(new Menu("Draw", "Draw"));
             drawMenu.AddItem(new MenuItem("eDraw", "Draw E range").SetValue(true));
@@ -54,7 +54,7 @@ namespace Alistar
             healMenu.AddItem(new MenuItem("allyHeal", "Heal Ally").SetValue(true));
             healMenu.AddItem(new MenuItem("Minimal HP to Heal", "Minimal HP to Heal").SetValue(new Slider(200, 1, playerMaxHealINT)));
 
-            spellMenu.AddItem(new MenuItem("LaughButton", "Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
+            //spellMenu.AddItem(new MenuItem("LaughButton", "Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
             Drawing.OnDraw += Drawing_OnDraw;
 
             menu.AddToMainMenu();
@@ -79,13 +79,13 @@ namespace Alistar
                 //combo();
             }
 
-            if (menu.Item("LaughButton").GetValue<KeyBind>().Active)
+            /*if (menu.Item("LaughButton").GetValue<KeyBind>().Active)
             {
                 if (Environment.TickCount > LastLaugh + 4200)
                 {
                     LastLaugh = Environment.TickCount;
                 }
-            }
+            }*/
         }
 
         private static void Drawing_OnDraw(EventArgs args)
