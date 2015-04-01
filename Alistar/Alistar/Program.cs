@@ -98,7 +98,7 @@ namespace Alistar
             if (Player.IsDead)
                 return;
 
-            Drawing.DrawText(Drawing.WorldToScreen(Player.Position)[0], Drawing.WorldToScreen(Player.Position)[1], Color.Orange, Player.Health.ToString() + " <= " + menu.Item("Minimal HP to Heal").GetValue<Slider>().Value;
+            Drawing.DrawText(Drawing.WorldToScreen(Player.Position)[0], Drawing.WorldToScreen(Player.Position)[1], Color.Orange, Player.Health.ToString() + " <= " + menu.Item("Minimal HP to Heal").GetValue<Slider>().Value);
 
             if(menu.Item("eDraw").GetValue<bool>())
             {
