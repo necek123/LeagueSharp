@@ -31,7 +31,7 @@ namespace Alistar
 
             Q = new Spell(SpellSlot.Q, 365);
             W = new Spell(SpellSlot.W, 650);
-            E = new Spell(SpellSlot.E, 555);
+            E = new Spell(SpellSlot.E, 535);
 
 
             
