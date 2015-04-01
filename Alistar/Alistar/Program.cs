@@ -142,13 +142,13 @@ namespace Alistar
                 {
                     Q.Cast();
                 }
-            } else if(Q.IsReady() && W.IsReady() && manaQ.ManaCost + manaW.ManaCost <= Player.Mana)
-            {
-                W.CastOnUnit(targetEnemy);
-                
-                if(Player.Distance((AttackableUnit)targetEnemy) < Q.Range)
+                else if (Q.IsReady() && W.IsReady() && manaQ.ManaCost + manaW.ManaCost <= Player.Mana)
                 {
-                    Q.Cast();
+                    W.CastOnUnit(targetEnemy);
+                    if (Player.Distance((AttackableUnit)targetEnemy) < Q.Range)
+                    {
+                        Q.Cast();
+                    }
                 }
             }
         }
