@@ -51,7 +51,7 @@ namespace Alistar
 
             Menu drawMenu = menu.AddSubMenu(new Menu("Draw", "Draw"));
             drawMenu.AddItem(new MenuItem("qDraw", "Draw Q range")).SetValue(new Circle(false, Color.FromArgb(150, Color.White)));
-            drawMenu.AddItem(new MenuItem("wDraw", "Draw W range")).SetValue(new Circle(false, Color.FromArgb(150, Color.White)));
+            drawMenu.AddItem(new MenuItem("wDraw", "Draw W range")).SetValue(new Circle(true, Color.FromArgb(150, Color.White)));
             drawMenu.AddItem(new MenuItem("eDraw", "Draw E range")).SetValue(new Circle(false, Color.FromArgb(150, Color.White)));
             drawMenu.AddItem(new MenuItem("debugDraw", "Debug Heal HP").SetValue(false));
 
@@ -105,10 +105,7 @@ namespace Alistar
                     LastLaugh = Environment.TickCount; ss
                 }
             }*/
-
-
         }
-
 
         private static void Drawing_OnDraw(EventArgs args)
         {
@@ -124,22 +121,17 @@ namespace Alistar
                 Drawing.DrawText(Drawing.WorldToScreen(Player.Position)[0], Drawing.WorldToScreen(Player.Position)[1], Color.Orange, Player.Health.ToString() + " < " + menu.Item("Minimal HP to Heal").GetValue<Slider>().Value);
             }
 
-            if(menu.Item("eDraw").GetValue<bool>())
+            if(ecircle.Active && E.Level > 0)
             {
-                
-
-                if (E.IsReady())
-                {
-                    Utility.DrawCircle(Player.Position, E.Range, ecircle.Color);
-                }
+                Utility.DrawCircle(Player.Position, E.Range, ecircle.Color);
             }
             
-            if(menu.Item("wDraw").GetValue<bool>() && W.Level > 0)
+            if(wcircle.Active && W.Level > 0)
             {
                 Utility.DrawCircle(Player.Position, W.Range, wcircle.Color);
             }
 
-            if(menu.Item("qDraw").GetValue<bool>() && Q.Level > 0)
+            if(qcircle.Active && Q.Level > 0)
             {
                 Utility.DrawCircle(Player.Position, Q.Range, qcircle.Color);
             }
@@ -215,8 +207,6 @@ namespace Alistar
                 
             }
         }
-
-
 
         private static float IgniteDamage(Obj_AI_Hero target)
         {
