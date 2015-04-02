@@ -37,10 +37,12 @@ namespace Alistar
             W = new Spell(SpellSlot.W, 600);
             E = new Spell(SpellSlot.E, 535);
 
-            Random rnd = new Random();
-            int secondFromStart = rnd.Next(15, 28);
-            Utility.DelayAction.Add(secondFromStart * 1000, () => Game.Say("/all Good Luck, Have fun guys! :D"));
-
+            if(menu.Item("Say GL HF").GetValue<bool>())
+            {
+                Random rnd = new Random();
+                int secondFromStart = rnd.Next(15, 28);
+                Utility.DelayAction.Add(secondFromStart * 1000, () => Game.Say("/all Good Luck, Have fun guys! :D"));
+            }
             
             menu = new Menu(Player.ChampionName + " ♥", Player.ChampionName, true);
             Menu orbwalkerMenu = menu.AddSubMenu(new Menu("Orbwalker", "Orbwalker"));
@@ -65,6 +67,9 @@ namespace Alistar
             healMenu.AddItem(new MenuItem("allyHeal", "Heal Ally").SetValue(true));
             healMenu.AddItem(new MenuItem("Minimal HP to Heal", "Minimal HP to Heal").SetValue(new Slider(150, 1, playerMaxHealINT)));
             healMenu.AddItem(new MenuItem("Minimal Mana to Heal", "Minimal Mana to Heal").SetValue(new Slider(150, 1, playerMaxManaINT)));
+
+            Menu miscMenu = menu.AddSubMenu(new Menu("Misc", "Misc"));
+            miscMenu.AddItem(new MenuItem("Say GL HF", "Say GL HF").SetValue<bool>(true));
 
             //spellMenu.AddItem(new MenuItem("LaughButton", "Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
             Drawing.OnDraw += Drawing_OnDraw;
@@ -103,7 +108,6 @@ namespace Alistar
 
         }
 
-        #region Drawing_OnDraw
 
         private static void Drawing_OnDraw(EventArgs args)
         {
@@ -138,11 +142,9 @@ namespace Alistar
             }
 
         }
-        #endregion
 
         //================================================================================
 
-        #region COMBO
         private static void combo()
         {
             var targetEnemy = TargetSelector.GetTarget(W.Range, TargetSelector.DamageType.Physical);
@@ -179,9 +181,8 @@ namespace Alistar
             }
 
         }
-        #endregion
 
-        #region HealE
+
         private static void HealE()
         {
             if (!menu.Item("useE").GetValue<bool>())
@@ -211,9 +212,9 @@ namespace Alistar
                 
             }
         }
-        #endregion
 
-        #region IgniteDamage
+
+
         private static float IgniteDamage(Obj_AI_Hero target)
         {
             if(ignite == SpellSlot.Unknown || Player.Spellbook.CanUseSpell(ignite) != SpellState.Ready)
@@ -222,7 +223,5 @@ namespace Alistar
             }
             return (float)Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite);
         }
-
-        #endregion
     }
 }
