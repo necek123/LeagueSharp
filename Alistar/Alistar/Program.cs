@@ -37,12 +37,12 @@ namespace Alistar
             W = new Spell(SpellSlot.W, 600);
             E = new Spell(SpellSlot.E, 535);
 
-            if (menu.Item("Say GL HF").GetValue<bool>())
-            {
+           // if (menu.Item("Say GL HF").GetValue<bool>())
+            //{
                 Random rnd = new Random();
                 int secondFromStart = rnd.Next(15, 28);
                 Utility.DelayAction.Add(secondFromStart * 1000, () => Game.Say("/all Good Luck, Have fun guys! :D"));
-            }
+            //}
             
             menu = new Menu(Player.ChampionName + " ♥", Player.ChampionName, true);
             Menu orbwalkerMenu = menu.AddSubMenu(new Menu("Orbwalker", "Orbwalker"));
