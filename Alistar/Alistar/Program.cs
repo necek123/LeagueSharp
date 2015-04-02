@@ -37,7 +37,7 @@ namespace Alistar
             W = new Spell(SpellSlot.W, 600);
             E = new Spell(SpellSlot.E, 535);
 
-            if(menu.Item("Say GL HF").GetValue<bool>())
+            if (menu.Item("Say GL HF").GetValue<bool>())
             {
                 Random rnd = new Random();
                 int secondFromStart = rnd.Next(15, 28);
