@@ -171,7 +171,7 @@ namespace Alistar
                 }
             }
 
-            if(Q.IsReady() && W.IsReady() && (W.IsKillable(targetEnemy, 1) || Q.IsKillable(targetEnemy, 1)) && ObjectManager.Player.Distance(targetEnemy, false) < W.Range)
+            if(W.IsReady() && W.IsKillable(targetEnemy, 1) && ObjectManager.Player.Distance(targetEnemy, false) < W.Range)
             {
                 W.CastOnUnit(targetEnemy);
             }
