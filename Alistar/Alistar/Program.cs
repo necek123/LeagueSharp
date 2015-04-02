@@ -50,9 +50,9 @@ namespace Alistar
             spellMenu.AddItem(new MenuItem("useW", "Use W").SetValue(true));*/
 
             Menu drawMenu = menu.AddSubMenu(new Menu("Draw", "Draw"));
-            drawMenu.AddItem(new MenuItem("qDraw", "Draw Q range").SetValue(false));
-            drawMenu.AddItem(new MenuItem("wDraw", "Draw W range").SetValue(true));
-            drawMenu.AddItem(new MenuItem("eDraw", "Draw E range").SetValue(false));
+            drawMenu.AddItem(new MenuItem("qDraw", "Draw Q range")).SetValue(new Circle(false, Color.FromArgb(150, Color.White)));
+            drawMenu.AddItem(new MenuItem("wDraw", "Draw W range")).SetValue(new Circle(false, Color.FromArgb(150, Color.White)));
+            drawMenu.AddItem(new MenuItem("eDraw", "Draw E range")).SetValue(new Circle(false, Color.FromArgb(150, Color.White)));
             drawMenu.AddItem(new MenuItem("debugDraw", "Debug Heal HP").SetValue(false));
 
             Menu healMenu = menu.AddSubMenu(new Menu("Heal Options", "Heal Options"));
@@ -115,6 +115,10 @@ namespace Alistar
             if (Player.IsDead)
                 return;
 
+            var qcircle = menu.Item("qDraw").GetValue<Circle>();
+            var wcircle = menu.Item("wDraw").GetValue<Circle>();
+            var ecircle = menu.Item("eDraw").GetValue<Circle>();
+
             if (menu.Item("debugDraw").GetValue<bool>())
             {
                 Drawing.DrawText(Drawing.WorldToScreen(Player.Position)[0], Drawing.WorldToScreen(Player.Position)[1], Color.Orange, Player.Health.ToString() + " < " + menu.Item("Minimal HP to Heal").GetValue<Slider>().Value);
@@ -122,24 +126,22 @@ namespace Alistar
 
             if(menu.Item("eDraw").GetValue<bool>())
             {
+                
+
                 if (E.IsReady())
                 {
-                    Utility.DrawCircle(Player.Position, E.Range, Color.LimeGreen);
-                }
-                else
-                {
-                    Utility.DrawCircle(Player.Position, E.Range, Color.DarkRed);
+                    Utility.DrawCircle(Player.Position, E.Range, ecircle.Color);
                 }
             }
             
             if(menu.Item("wDraw").GetValue<bool>() && W.Level > 0)
             {
-                Utility.DrawCircle(Player.Position, W.Range, Color.Aqua);
+                Utility.DrawCircle(Player.Position, W.Range, wcircle.Color);
             }
 
             if(menu.Item("qDraw").GetValue<bool>() && Q.Level > 0)
             {
-                Utility.DrawCircle(Player.Position, Q.Range, Color.Aqua);
+                Utility.DrawCircle(Player.Position, Q.Range, qcircle.Color);
             }
 
         }
