@@ -37,6 +37,9 @@ namespace Alistar
             W = new Spell(SpellSlot.W, 600);
             E = new Spell(SpellSlot.E, 535);
 
+            Random rnd = new Random();
+            int secondFromStart = rnd.Next(15, 28);
+            Utility.DelayAction.Add(secondFromStart * 1000, () => Game.Say("/all Good Luck, Have fun guys! :D"));
 
             
             menu = new Menu(Player.ChampionName + " ♥", Player.ChampionName, true);
@@ -75,6 +78,7 @@ namespace Alistar
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
+
             if (Player.IsDead)
                 return;
 
@@ -95,6 +99,8 @@ namespace Alistar
                     LastLaugh = Environment.TickCount; ss
                 }
             }*/
+
+
         }
 
         #region Drawing_OnDraw
