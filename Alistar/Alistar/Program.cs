@@ -171,9 +171,9 @@ namespace Alistar
                 }
             }
 
-            if(Q.IsReady() && W.IsReady() && W.IsKillable(targetEnemy, 1) && ObjectManager.Player.Distance(targetEnemy, false) < W.Range + targetEnemy.BoundingRadius)
+            if(Q.IsReady() && W.IsReady() && (W.IsKillable(targetEnemy, 1) || Q.IsKillable(targetEnemy, 1)) && ObjectManager.Player.Distance(targetEnemy, false) < W.Range)
             {
-                W.CastOnUnit(targetEnemy, true);
+                W.CastOnUnit(targetEnemy);
             }
 
             if(Player.Distance((AttackableUnit)targetEnemy) <= 600 && IgniteDamage(targetEnemy) >= targetEnemy.Health && menu.Item("useIgnite").GetValue<bool>())
