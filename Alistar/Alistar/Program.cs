@@ -36,13 +36,6 @@ namespace Alistar
             Q = new Spell(SpellSlot.Q, 350);
             W = new Spell(SpellSlot.W, 600);
             E = new Spell(SpellSlot.E, 535);
-
-           // if (menu.Item("Say GL HF").GetValue<bool>())
-            //{
-                Random rnd = new Random();
-                int secondFromStart = rnd.Next(15, 28);
-                Utility.DelayAction.Add(secondFromStart * 1000, () => Game.Say("/all Good Luck, Have fun guys! :D"));
-            //}
             
             menu = new Menu(Player.ChampionName + " ♥", Player.ChampionName, true);
             Menu orbwalkerMenu = menu.AddSubMenu(new Menu("Orbwalker", "Orbwalker"));
@@ -79,6 +72,14 @@ namespace Alistar
 
             Game.OnUpdate += Game_OnGameUpdate;
             Game.PrintChat("<font color=\"#ff9e00\">[NECEK CARRY]</font> <font color=\"#00ff00\">Combo Alistar! Have fun! By necek123. (V{0})</font> [L#]", version);
+           
+            if (menu.Item("Say GL HF").GetValue<bool>())
+            {
+                Random rnd = new Random();
+                int secondFromStart = rnd.Next(15, 28);
+                Utility.DelayAction.Add(secondFromStart * 1000, () => Game.Say("/all Good Luck, Have fun guys! :D"));
+            }
+        
         }
 
         private static void Game_OnGameUpdate(EventArgs args)
